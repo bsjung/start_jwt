@@ -34,7 +34,7 @@ jwt.isValid(token);
 
 // Decode (i.e. extract) the payload from a JWT token.
 
-final payload = jwt.decode(token);
+final decoded = jwt.decode(token);
 ```
 
 

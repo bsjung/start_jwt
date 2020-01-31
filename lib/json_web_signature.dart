@@ -17,8 +17,7 @@ class JsonWebSignatureEncoder extends Converter<List<int>,String> {
   const JsonWebSignatureEncoder();
   @override
   String convert(List<int> payload, {Map header, String secret}) {
-    // print(JSON.encode(header));
-    print(json.encode(header));
+    //print(json.encode(header));
     // final msg = '${BASE64URL.encode(JSON.encode(header).codeUnits)}.${BASE64URL.encode(payload)}';
     final msg = '${base64Url.encode(json.encode(header).codeUnits)}.${base64Url.encode(payload)}';
     return "${msg}.${_signMessage(msg, secret)}";
