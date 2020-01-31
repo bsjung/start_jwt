@@ -58,4 +58,7 @@ Credits
 -------
 
 Copyright (c) 2014 George Moschovitis <george.moschovitis@gmail.com>.
+
+Copyright (c) 2019 JarrodCColburn at https://github.com/JarrodCColburn.
+
 Copyright (c) 2020 Benjamin Jung <bsjung@gmail.com>.
