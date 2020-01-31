@@ -46,7 +46,7 @@ void main() {
 Status
 ------
 
-The API is not stable. The intend is to strictly follow Dart conventions, i.e.
+The API is very simple. The intend is to strictly follow Dart conventions, i.e.
 make the API as 'dartish' as possible while maintaining simplicity. We are
 open to any suggestions towards that goal.
 
