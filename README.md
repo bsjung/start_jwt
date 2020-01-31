@@ -16,7 +16,7 @@ Example usage
 -------------
 
 ```dart
-import 'package:jwt/json_web_token.dart';
+import 'package:start_jwt/json_web_token.dart';
 
 // Encode (i.e. sign) a payload into a JWT token.
 
@@ -58,3 +58,4 @@ Credits
 -------
 
 Copyright (c) 2014 George Moschovitis <george.moschovitis@gmail.com>.
+Copyright (c) 2020 Benjamin Jung <bsjung@gmail.com>.
