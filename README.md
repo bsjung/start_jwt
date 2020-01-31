@@ -16,8 +16,6 @@ Example usage
 -------------
 
 ```dart
-import 'dart:math';
-
 import 'package:start_jwt/json_web_token.dart';
 
 void main() {
