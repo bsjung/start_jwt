@@ -1,0 +1,20 @@
+name: start_jwt
+version: 0.1.0
+author: 
+  - George Moschovitis <george.moschovitis@gmail.com>
+  - JarrodCColburn https://github.com/JarrodCColburn/dart-json_web_token
+  - Benjamin Jung <bsjung@gmail.com>
+
+description: JSON Web Token implemented as a standard Dart codec.
+
+homepage: https://github.com/bsjung/start_jwt
+
+environment:
+  sdk: ">=2.0.0-dev.65 <3.0.0"
+
+dependencies:
+  crypto: ^2.1.4
+  cryptoutils: ^0.4.0
+
+dev_dependencies:
+  test: ^1.0.0
