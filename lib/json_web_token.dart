@@ -18,8 +18,7 @@ class JsonWebTokenEncoder extends Converter<Map,String> {
   const JsonWebTokenEncoder();
   @override
   String convert(Map payload, {Map header, String secret}) {
-    // return _JWS_ENCODER.convert(JSON.encode(payload).codeUnits, header: header, secret: secret);
-    return _JWS_ENCODER.convert(json.encode(payload).codeUnits, header: header, secret: secret);
+    return _JWS_ENCODER.convert(jsonEncode(payload).codeUnits, header: header, secret: secret);
   }
 }
 
@@ -37,7 +36,7 @@ class JsonWebTokenDecoder extends Converter<String,Map> {
   @override
   Map convert(String token, {Map header, String secret}) {
     // return JSON.decode(new String.fromCharCodes(_JWS_DECODER.convert(token, secret: secret)));
-    return json.decode(new String.fromCharCodes(_JWS_DECODER.convert(token, secret: secret)));
+    return jsonDecode(new String.fromCharCodes(_JWS_DECODER.convert(token, secret: secret)));
   }
 }
 

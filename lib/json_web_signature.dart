@@ -7,9 +7,6 @@ library json_web_signature;
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 
-// import 'base64url.dart' show BASE64URL;
-
-
 /**
  * JSON Web Signature encoder.
  */
@@ -17,9 +14,8 @@ class JsonWebSignatureEncoder extends Converter<List<int>,String> {
   const JsonWebSignatureEncoder();
   @override
   String convert(List<int> payload, {Map header, String secret}) {
-    //print(json.encode(header));
-    // final msg = '${BASE64URL.encode(JSON.encode(header).codeUnits)}.${BASE64URL.encode(payload)}';
-    final msg = '${base64Url.encode(json.encode(header).codeUnits)}.${base64Url.encode(payload)}';
+    //print(jsonEncode(header));
+    final msg = '${base64Url.encode(jsonEncode(header).codeUnits)}.${base64Url.encode(payload)}';
     return "${msg}.${_signMessage(msg, secret)}";
   }
 }
@@ -96,9 +92,6 @@ class JsonWebSignatureCodec extends Codec<List<int>,String> {
 
 String _signMessage(String msg, String secret) {
   Hmac hmac = Hmac( sha256 , secret.codeUnits);
-  // hmac.add(msg.codeUnits);
   Digest digest = hmac.convert(msg.codeUnits);
-  // final signature = hmac.close();
-  // return BASE64URL.encode(signature);
   return base64Url.encode(digest.bytes);
 }
