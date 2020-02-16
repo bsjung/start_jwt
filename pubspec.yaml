@@ -1,18 +1,15 @@
-name: start_chart
-version: 0.1.0
-description: A chart library for Flutter. Create beautiful charts using a simple and intuitive API.
+name: start_jwt
+version: 0.2.0
+description: JSON Web Token implemented as a standard Dart codec.
 
-homepage: https://github.com/bsjung/start_chart
+homepage: https://github.com/bsjung/start_jwt
 
 environment:
   sdk: ">=2.0.0-dev.65 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
-  meta: "^1.1.2"
+  crypto: ^2.1.4
+  cryptoutils: ^0.4.0
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   test: ^1.0.0
