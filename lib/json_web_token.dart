@@ -17,7 +17,7 @@ class JsonWebTokenEncoder extends Converter<Map,String> {
 
   const JsonWebTokenEncoder();
   @override
-  String convert(Map payload, {Map header, String secret}) {
+  String convert(Map? payload, {Map? header, required String secret}) {
     return _JWS_ENCODER.convert(jsonEncode(payload).codeUnits, header: header, secret: secret);
   }
 }
@@ -26,7 +26,7 @@ class JsonWebTokenEncoder extends Converter<Map,String> {
 /**
  * JSON Web Signature decoder.
  */
-class JsonWebTokenDecoder extends Converter<String,Map> {
+class JsonWebTokenDecoder extends Converter<String,Map?> {
   static const _JWS_DECODER = const JsonWebSignatureDecoder();
 
   const JsonWebTokenDecoder();
@@ -34,7 +34,7 @@ class JsonWebTokenDecoder extends Converter<String,Map> {
   bool isValid(String input, String secret) => _JWS_DECODER.isValid(input, secret);
 
   @override
-  Map convert(String token, {Map header, String secret}) {
+  Map? convert(String token, {Map? header, required String secret}) {
     // return JSON.decode(new String.fromCharCodes(_JWS_DECODER.convert(token, secret: secret)));
     return jsonDecode(new String.fromCharCodes(_JWS_DECODER.convert(token, secret: secret)));
   }
@@ -44,16 +44,16 @@ class JsonWebTokenDecoder extends Converter<String,Map> {
 /**
  * JSON Web Token codec.
  */
-class JsonWebTokenCodec extends Codec<Map,String> {
+class JsonWebTokenCodec extends Codec<Map?,String> {
   static const _DEFAULT_HEADER = const {
     'typ': 'JWT',
     'alg': 'HS256'
   };
 
   final Map _header;
-  final String _secret;
+  final String? _secret;
 
-  const JsonWebTokenCodec({Map header, String secret}) :
+  const JsonWebTokenCodec({Map? header, String? secret}) :
       _header = header != null ? header : _DEFAULT_HEADER,
       _secret = secret;
 
@@ -64,17 +64,17 @@ class JsonWebTokenCodec extends Codec<Map,String> {
   JsonWebTokenDecoder get decoder => const JsonWebTokenDecoder();
 
   @override
-  String encode(Map payload, {Map header, String secret}) {
+  String encode(Map? payload, {Map? header, String? secret}) {
     return encoder.convert(payload, header: (header != null ? header : _header),
-        secret: (secret != null ? secret : _secret));
+        secret: (secret != null ? secret : _secret!));
   }
 
   @override
-  Map decode(String input, {String secret}) {
-    return decoder.convert(input, secret: (secret != null ? secret : _secret));
+  Map? decode(String input, {String? secret}) {
+    return decoder.convert(input, secret: (secret != null ? secret : _secret!));
   }
 
-  bool isValid(String input, {String secret}) {
-    return decoder.isValid(input, secret != null ? secret : _secret);
+  bool isValid(String input, {String? secret}) {
+    return decoder.isValid(input, secret != null ? secret : _secret!);
   }
 }

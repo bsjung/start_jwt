@@ -13,7 +13,7 @@ import 'package:crypto/crypto.dart';
 class JsonWebSignatureEncoder extends Converter<List<int>,String> {
   const JsonWebSignatureEncoder();
   @override
-  String convert(List<int> payload, {Map header, String secret}) {
+  String convert(List<int> payload, {Map? header, required String secret}) {
     //print(jsonEncode(header));
     final msg = '${base64Url.encode(jsonEncode(header).codeUnits)}.${base64Url.encode(payload)}';
     return "${msg}.${_signMessage(msg, secret)}";
@@ -29,11 +29,11 @@ class JsonWebSignatureDecoder extends Converter<String,List<int>>{
 
   bool isValid(String input, String secret) {
     final parts = input.split('.'),
-          header = parts[0],
-          payload = parts[1],
-          signature = parts[2];
+          header = parts[0] as List<String>,
+          payload = parts[1] as List<String>,
+          signature = parts[2] as List<String>;
 
-    return _verifyParts(header, payload, signature, secret);
+    return _verifyParts(header as String, payload as String, signature as String, secret);
   }
 
   bool _verifyParts(String header, String payload, String signature, String secret) {
@@ -41,14 +41,14 @@ class JsonWebSignatureDecoder extends Converter<String,List<int>>{
   }
 
   @override
-  List<int> convert(String input, {String secret}) {
+  List<int> convert(String input, {required String secret}) {
     final parts = input.split('.'),
-          header = parts[0],
-          payload = parts[1],
-          signature = parts[2];
+          header = parts[0] as List<String>,
+          payload = parts[1] as List<String>,
+          signature = parts[2] as List<String>;
 
-    if (_verifyParts(header, payload, signature, secret)) {
-      return base64Url.decode(payload);
+    if (_verifyParts(header as String, payload as String, signature as String, secret)) {
+      return base64Url.decode(payload as String);
     } else {
       throw new ArgumentError("Invalid signature");
     }
@@ -60,10 +60,10 @@ class JsonWebSignatureDecoder extends Converter<String,List<int>>{
  * JSON Web Signature codec.
  */
 class JsonWebSignatureCodec extends Codec<List<int>,String> {
-  final Map _header;
-  final String _secret;
+  final Map? _header;
+  final String? _secret;
 
-  const JsonWebSignatureCodec({Map header, String secret}) :
+  const JsonWebSignatureCodec({Map? header, String? secret}) :
       _header = header,
       _secret = secret;
 
@@ -74,18 +74,18 @@ class JsonWebSignatureCodec extends Codec<List<int>,String> {
   JsonWebSignatureDecoder get decoder => const JsonWebSignatureDecoder();
 
   @override
-  String encode(List<int> payload, {Map header, String secret}) {
+  String encode(List<int> payload, {Map? header, String? secret}) {
     return encoder.convert(payload, header: (header != null ? header : _header),
-        secret: (secret != null ? secret : _secret));
+        secret: (secret != null ? secret : _secret!));
   }
 
   @override
-  List<int> decode(String input, {String secret}) {
-    return decoder.convert(input, secret: (secret != null ? secret : _secret));
+  List<int> decode(String input, {String? secret}) {
+    return decoder.convert(input, secret: (secret != null ? secret : _secret!));
   }
 
-  bool isValid(String input, {String secret}) {
-    return decoder.isValid(input, secret != null ? secret : _secret);
+  bool isValid(String input, {String? secret}) {
+    return decoder.isValid(input, secret != null ? secret : _secret!);
   }
 }
 
